@@ -1,0 +1,33 @@
+# Eclipse
+.classpath
+.project
+.settings
+.metadata
+bin/
+
+# Gradle
+/.gradle/
+*/build/
+gradle.properties
+
+.DS_Store
+*.log
+
+# Cache folders
+*/.cache/
+build/
+
+### IntelliJ IDEA ###
+.idea
+/out/
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
