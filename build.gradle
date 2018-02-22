@@ -18,7 +18,7 @@ gitPublishConfig {
 	branch = "releases"
 }
 
-group = "commons-reflection-utils"
+group = "com.github.lordrex34.reflection"
 version = "1.0.0"
 
 repositories {
@@ -111,7 +111,7 @@ uploadArchives {
 			pom.project {
 				name project.name
 				packaging "jar"
-				description "An annotation based configuration API for static fields."
+				description "A simple reflection util collection."
 				url "https://github.com/lordrex34/commons-reflection-utils"
 
 				scm {

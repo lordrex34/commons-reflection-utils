@@ -1,0 +1,2 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/dc2d43dd19da473e85af46194b8c5798)](https://www.codacy.com/app/lordrex34/commons-reflection-utils?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lordrex34/commons-reflection-utils&amp;utm_campaign=Badge_Grade)
+[![CircleCI](https://circleci.com/gh/lordrex34/commons-reflection-utils.svg?style=svg)](https://circleci.com/gh/lordrex34/commons-reflection-utils)
