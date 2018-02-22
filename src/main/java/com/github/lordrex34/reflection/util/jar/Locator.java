@@ -247,13 +247,13 @@ public final class Locator
 	 */
 	public static URL[] getLocationURLs(File location, final String[] extensions) throws MalformedURLException
 	{
-		
 		URL[] urls = new URL[0];
 		
 		if (!location.exists())
 		{
 			return urls;
 		}
+		
 		if (!location.isDirectory())
 		{
 			urls = new URL[1];
@@ -268,6 +268,7 @@ public final class Locator
 			}
 			return urls;
 		}
+		
 		final File[] matches = location.listFiles((dir, name) ->
 		{
 			for (String extension : extensions)
@@ -279,11 +280,16 @@ public final class Locator
 			}
 			return false;
 		});
-		urls = new URL[matches.length];
-		for (int i = 0; i < matches.length; ++i)
+		
+		if (matches != null)
 		{
-			urls[i] = matches[i].toURI().toURL();
+			urls = new URL[matches.length];
+			for (int i = 0; i < matches.length; ++i)
+			{
+				urls[i] = matches[i].toURI().toURL();
+			}
 		}
+		
 		return urls;
 	}
 }
