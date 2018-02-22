@@ -22,8 +22,11 @@
 package com.github.lordrex34.reflection.util;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -33,17 +36,32 @@ import org.junit.Test;
 public final class GenericUtilTest
 {
 	@Test
-	public void testParent()
+	public void testClassParent()
 	{
-		assertEquals(GenericUtil.getGenericParameter(ParentTestSubject.class, 0), Integer.class);
-		assertEquals(GenericUtil.getGenericParameter(ParentTestSubject.class, 1), String.class);
+		assertNotEquals(GenericUtil.parameterOf(ParentTestSubject.class, 0), Object.class);
+		assertNotEquals(GenericUtil.parameterOf(ParentTestSubject.class, 1), Object.class);
+		assertEquals(GenericUtil.parameterOf(ParentTestSubject.class, 0), Integer.class);
+		assertEquals(GenericUtil.parameterOf(ParentTestSubject.class, 1), String.class);
 	}
 	
 	@Test
-	public void testInherited()
+	public void testClassInherited()
 	{
-		assertEquals(GenericUtil.getGenericParameter(InheritedTestSubject.class, 0), Integer.class);
-		assertEquals(GenericUtil.getGenericParameter(InheritedTestSubject.class, 1), String.class);
+		assertNotEquals(GenericUtil.parameterOf(InheritedTestSubject.class, 0), Object.class);
+		assertNotEquals(GenericUtil.parameterOf(InheritedTestSubject.class, 1), Object.class);
+		assertEquals(GenericUtil.parameterOf(InheritedTestSubject.class, 0), Integer.class);
+		assertEquals(GenericUtil.parameterOf(InheritedTestSubject.class, 1), String.class);
+	}
+	
+	@Test
+	public void testField()
+	{
+		final Field field = FieldTestSubject.class.getFields()[0];
+		
+		assertNotEquals(GenericUtil.typeOf(field, 0), Object.class);
+		assertNotEquals(GenericUtil.typeOf(field, 1), Object.class);
+		assertEquals(GenericUtil.typeOf(field, 0), String.class);
+		assertEquals(GenericUtil.typeOf(field, 1), Byte.class);
 	}
 	
 	abstract class ParentTestSubject extends HashMap<Integer, String>
@@ -54,5 +72,10 @@ public final class GenericUtilTest
 	abstract class InheritedTestSubject extends ParentTestSubject
 	{
 		private static final long serialVersionUID = 1L;
+	}
+	
+	class FieldTestSubject
+	{
+		public Map<String, Byte> testField;
 	}
 }

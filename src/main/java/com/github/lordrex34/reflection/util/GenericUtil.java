@@ -35,30 +35,48 @@ public final class GenericUtil
 		// utility class
 	}
 	
-	public static Type[] getGenericTypes(Field field)
+	/**
+	 * Retrieves the generic types of a specified field into an array of {@link Type}s.
+	 * @param field the field used to get the generic types
+	 * @return array of types
+	 */
+	public static Type[] typesOf(Field field)
 	{
-		final Type genType = field.getGenericType();
-		if (!ParameterizedType.class.isInstance(genType))
+		final Type genericType = field.getGenericType();
+		if (!ParameterizedType.class.isInstance(genericType))
 		{
 			return null;
 		}
 		
-		final ParameterizedType pType = (ParameterizedType) genType;
-		return pType.getActualTypeArguments();
+		final ParameterizedType parameterizedType = (ParameterizedType) genericType;
+		return parameterizedType.getActualTypeArguments();
 	}
 	
-	public static Class<?> getFirstGenericTypeOfGenerizedField(Field field)
+	/**
+	 * Retrieves a specific element of the generic type array, see {@link #typesOf(Field)}.
+	 * @param field the field used to get the generic types
+	 * @param index the index of the desired generic type
+	 * @return generic type
+	 */
+	public static Class<?> typeOf(Field field, int index)
 	{
-		final Type[] allGenTypes = getGenericTypes(field);
-		if (allGenTypes == null)
+		final Type[] allGenericTypes = typesOf(field);
+		if (allGenericTypes == null)
 		{
 			return Object.class; // missing wildcard declaration
 		}
 		
-		return (Class<?>) allGenTypes[0];
+		return (Class<?>) allGenericTypes[index];
 	}
 	
-	public static Class<?> getGenericParameter(Class<?> clazz, int index)
+	/**
+	 * Retrieves the generic parameter of a specified class.<br>
+	 * In case it cannot be found, the parent is being checked as well.
+	 * @param clazz the class whose generic is being gathered
+	 * @param index the index of the desired generic parameter
+	 * @return generic parameter
+	 */
+	public static Class<?> parameterOf(Class<?> clazz, int index)
 	{
 		Type genericSuperClass = clazz.getGenericSuperclass();
 		
