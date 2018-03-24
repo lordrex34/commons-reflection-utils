@@ -10,7 +10,7 @@ apply plugin: "maven-publish"
 apply plugin: "signing"
 apply plugin: "findbugs"
 
-sourceCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_1_9
 
 gitPublishConfig {
 	org = "lordrex34"
@@ -33,7 +33,7 @@ eclipse {
 
 dependencies {
 	compile(group: "org.slf4j", name: "slf4j-api", version: "1.7.25")
-	compile(group: "com.google.guava", name: "guava", version: "24.0-jre")
+	compile(group: "com.google.guava", name: "guava", version: "24.1-jre")
 	testCompile(group: 'junit', name: 'junit', version: '4.12')
 }
 
