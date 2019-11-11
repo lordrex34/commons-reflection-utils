@@ -26,9 +26,9 @@ repositories {
 }
 
 dependencies {
-	compile(group: "org.slf4j", name: "slf4j-api", version: "1.7.25")
-	compile(group: "com.google.guava", name: "guava", version: "24.1-jre")
-	testCompile(group: 'junit', name: 'junit', version: '4.12')
+	compile(group: "org.slf4j", name: "slf4j-api", version: "1.7.29")
+	compile(group: "com.google.guava", name: "guava", version: "28.1-jre")
+	testCompile(group: "org.junit.jupiter", name: "junit-jupiter-engine", version: "5.2.0")
 }
 
 test {
@@ -139,6 +139,9 @@ uploadArchives {
 	}
 }
 
+test {
+	useJUnitPlatform()
+}
 
 task wrapper(type: Wrapper) {
 	gradleVersion = "4.7"

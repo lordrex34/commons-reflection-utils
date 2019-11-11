@@ -24,6 +24,7 @@ package com.github.lordrex34.reflection.util.jar;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,10 +37,10 @@ import com.google.common.base.Strings;
  * A simple class to gather the manifest version information of JAR files.
  * @author lord_rex
  */
-public final class VersionInfo
+public class VersionInfo
 {
 	/** A default string for the cases when version info cannot be retrieved. (IDE Mode) */
-	private static final String IDE_MODE = "Version Info - IDE Mode.";
+	public static final String IDE_MODE = "Version Info - IDE Mode.";
 	
 	private String filename = null;
 	private final Map<String, String> manifestAttributes;
@@ -50,9 +51,17 @@ public final class VersionInfo
 	 */
 	public VersionInfo(Class<?> clazz)
 	{
-		manifestAttributes = new HashMap<>();
-		
-		final File file = Locator.getClassSource(clazz);
+		this(Locator.getClassSource(clazz));
+	}
+	
+	/**
+	 * Gather version information from the class.
+	 * @param file the JAR file that is used for version extraction
+	 */
+	public VersionInfo(File file)
+	{
+		this.manifestAttributes = new HashMap<>();
+
 		if (!file.isFile())
 		{
 			return;
@@ -61,10 +70,10 @@ public final class VersionInfo
 		final String filename = file.getName();
 		this.filename = filename.substring(0, filename.lastIndexOf("."));
 		
-		try (JarFile jarFile = new JarFile(file);)
+		try (JarFile jarFile = new JarFile(file))
 		{
 			final Attributes attributes = jarFile.getManifest().getMainAttributes();
-			attributes.entrySet().forEach((entry) -> manifestAttributes.put(String.valueOf(entry.getKey()), String.valueOf(entry.getValue())));
+			attributes.forEach((key, value) -> manifestAttributes.put(String.valueOf(key), String.valueOf(value)));
 		}
 		catch (IOException e)
 		{
@@ -73,13 +82,43 @@ public final class VersionInfo
 	}
 	
 	/**
+	 * Gets an unmodifiable view of the manifest attributes of the given JAR.
+	 * @return all manifest attributes
+	 */
+	public Map<String, String> getManifestAttributes()
+	{
+		return Collections.unmodifiableMap(manifestAttributes);
+	}
+	
+	/**
+	 * Checks whether the map contains the specified manifest or not.
+	 * @param name see {@link VersionInfoManifest}
+	 * @return @{code true} if the map contains the specified manifest
+	 */
+	public boolean hasManifest(String name)
+	{
+		return manifestAttributes.containsKey(name);
+	}
+	
+	/**
 	 * Gets a manifest from the manifest attribute map, shows {@link #IDE_MODE} if null.
+	 * @param name see {@link VersionInfoManifest}
+	 * @param defaultValue a fallback value
+	 * @return manifest info
+	 */
+	public String getManifest(String name, String defaultValue)
+	{
+		return manifestAttributes.getOrDefault(name, defaultValue);
+	}
+	
+	/**
+	 * Compatibility method. See {@link #getManifest(String, String)}
 	 * @param name see {@link VersionInfoManifest}
 	 * @return manifest info
 	 */
 	public String getManifest(String name)
 	{
-		return manifestAttributes.getOrDefault(name, IDE_MODE);
+		return getManifest(name, IDE_MODE);
 	}
 	
 	/**
