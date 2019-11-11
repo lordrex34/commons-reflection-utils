@@ -38,19 +38,19 @@ class GenericUtilTest
 	@Test
 	void testClassParent()
 	{
-		assertNotEquals(GenericUtil.parameterOf(ParentTestSubject.class, 0), Object.class);
-		assertNotEquals(GenericUtil.parameterOf(ParentTestSubject.class, 1), Object.class);
-		assertEquals(GenericUtil.parameterOf(ParentTestSubject.class, 0), Integer.class);
-		assertEquals(GenericUtil.parameterOf(ParentTestSubject.class, 1), String.class);
+		assertNotEquals(Object.class, GenericUtil.parameterOf(ParentTestSubject.class, 0));
+		assertNotEquals(Object.class,GenericUtil.parameterOf(ParentTestSubject.class, 1));
+		assertEquals( Integer.class,GenericUtil.parameterOf(ParentTestSubject.class, 0));
+		assertEquals(String.class, GenericUtil.parameterOf(ParentTestSubject.class, 1));
 	}
 	
 	@Test
 	void testClassInherited()
 	{
-		assertNotEquals(GenericUtil.parameterOf(InheritedTestSubject.class, 0), Object.class);
-		assertNotEquals(GenericUtil.parameterOf(InheritedTestSubject.class, 1), Object.class);
-		assertEquals(GenericUtil.parameterOf(InheritedTestSubject.class, 0), Integer.class);
-		assertEquals(GenericUtil.parameterOf(InheritedTestSubject.class, 1), String.class);
+		assertNotEquals(Object.class, GenericUtil.parameterOf(InheritedTestSubject.class, 0));
+		assertNotEquals(Object.class, GenericUtil.parameterOf(InheritedTestSubject.class, 1));
+		assertEquals(Integer.class, GenericUtil.parameterOf(InheritedTestSubject.class, 0));
+		assertEquals(String.class, GenericUtil.parameterOf(InheritedTestSubject.class, 1));
 	}
 	
 	@Test
@@ -58,10 +58,10 @@ class GenericUtilTest
 	{
 		final Field field = FieldTestSubject.class.getFields()[0];
 		
-		assertNotEquals(GenericUtil.typeOf(field, 0), Object.class);
-		assertNotEquals(GenericUtil.typeOf(field, 1), Object.class);
-		assertEquals(GenericUtil.typeOf(field, 0), String.class);
-		assertEquals(GenericUtil.typeOf(field, 1), Byte.class);
+		assertNotEquals(Object.class, GenericUtil.typeOf(field, 0));
+		assertNotEquals(Object.class, GenericUtil.typeOf(field, 1));
+		assertEquals(String.class, GenericUtil.typeOf(field, 0));
+		assertEquals(Byte.class, GenericUtil.typeOf(field, 1));
 	}
 	
 	abstract class ParentTestSubject extends HashMap<Integer, String>

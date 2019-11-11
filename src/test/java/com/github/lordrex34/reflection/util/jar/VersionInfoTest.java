@@ -21,7 +21,10 @@
  */
 package com.github.lordrex34.reflection.util.jar;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import com.github.lordrex34.reflection.util.jar.VersionInfo.VersionInfoManifest;
@@ -33,10 +36,13 @@ import com.google.common.collect.Multimap;
 class VersionInfoTest
 {
 	@Test
-	void test()
+	void testGuavaLib()
 	{
 		final VersionInfo versionInfo = new VersionInfo(Multimap.class);
 		assertNotNull(versionInfo.getManifest(VersionInfoManifest.BUILT_BY));
 		assertNotNull(versionInfo.getManifest(VersionInfoManifest.CREATED_BY));
+		assertEquals("123", versionInfo.getManifest("nonsense", "123"));
+		assertTrue(versionInfo.hasManifest(VersionInfoManifest.BUILT_BY));
+		assertFalse(versionInfo.hasManifest("another_nonsense"));
 	}
 }
