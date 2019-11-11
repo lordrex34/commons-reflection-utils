@@ -37,7 +37,7 @@ import com.google.common.base.Strings;
  * A simple class to gather the manifest version information of JAR files.
  * @author lord_rex
  */
-public final class VersionInfo
+public class VersionInfo
 {
 	/** A default string for the cases when version info cannot be retrieved. (IDE Mode) */
 	public static final String IDE_MODE = "Version Info - IDE Mode.";
@@ -58,7 +58,8 @@ public final class VersionInfo
 	 * Gather version information from the class.
 	 * @param file the JAR file that is used for version extraction
 	 */
-	public VersionInfo(File file) {
+	public VersionInfo(File file)
+	{
 		this.manifestAttributes = new HashMap<>();
 
 		if (!file.isFile())
