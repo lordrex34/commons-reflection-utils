@@ -19,7 +19,7 @@ gitPublishConfig {
 }
 
 group = "com.github.lordrex34.reflection"
-version = "1.0.2"
+version = "1.0.3"
 
 repositories {
 	mavenCentral()
