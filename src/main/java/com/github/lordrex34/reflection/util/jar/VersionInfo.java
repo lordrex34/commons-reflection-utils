@@ -1,16 +1,16 @@
 /*
  * Copyright (c) 2017 Reginald Ravenhorst <lordrex34@gmail.com>
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -41,8 +41,8 @@ public final class VersionInfo
 	/** A default string for the cases when version info cannot be retrieved. (IDE Mode) */
 	private static final String IDE_MODE = "Version Info - IDE Mode.";
 	
-	private String _filename = null;
-	private final Map<String, String> _manifestAttributes;
+	private String filename = null;
+	private final Map<String, String> manifestAttributes;
 	
 	/**
 	 * Gather version information from the class.
@@ -50,7 +50,7 @@ public final class VersionInfo
 	 */
 	public VersionInfo(Class<?> clazz)
 	{
-		_manifestAttributes = new HashMap<>();
+		manifestAttributes = new HashMap<>();
 		
 		final File file = Locator.getClassSource(clazz);
 		if (!file.isFile())
@@ -59,12 +59,12 @@ public final class VersionInfo
 		}
 		
 		final String filename = file.getName();
-		_filename = filename.substring(0, filename.lastIndexOf("."));
+		this.filename = filename.substring(0, filename.lastIndexOf("."));
 		
 		try (JarFile jarFile = new JarFile(file);)
 		{
 			final Attributes attributes = jarFile.getManifest().getMainAttributes();
-			attributes.entrySet().forEach((entry) -> _manifestAttributes.put(String.valueOf(entry.getKey()), String.valueOf(entry.getValue())));
+			attributes.entrySet().forEach((entry) -> manifestAttributes.put(String.valueOf(entry.getKey()), String.valueOf(entry.getValue())));
 		}
 		catch (IOException e)
 		{
@@ -79,7 +79,7 @@ public final class VersionInfo
 	 */
 	public String getManifest(String name)
 	{
-		return _manifestAttributes.getOrDefault(name, IDE_MODE);
+		return manifestAttributes.getOrDefault(name, IDE_MODE);
 	}
 	
 	/**
@@ -88,7 +88,7 @@ public final class VersionInfo
 	 */
 	public boolean isIDE()
 	{
-		return Strings.isNullOrEmpty(_filename);
+		return Strings.isNullOrEmpty(filename);
 	}
 	
 	/**
@@ -104,7 +104,7 @@ public final class VersionInfo
 		
 		final StringBuilder sb = new StringBuilder();
 		
-		sb.append(_filename).append(": ");
+		sb.append(filename).append(": ");
 		sb.append(getManifest(VersionInfoManifest.GIT_HASH_SHORT)).append(", ");
 		sb.append(getManifest(VersionInfoManifest.GIT_COMMIT_COUNT)).append(", ");
 		sb.append(getManifest(VersionInfoManifest.IMPLEMENTATION_TIME));
